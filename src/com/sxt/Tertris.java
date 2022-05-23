@@ -4,10 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
 public class Tertris extends JFrame implements KeyListener{
+    File file1 = new File("图标.jpg");
+
     //游戏的行数26,列数12
     private static final int game_x = 26;
     private static final int game_y = 12;
@@ -25,6 +28,8 @@ public class Tertris extends JFrame implements KeyListener{
     static int[] allRect;
     //用于存储当前方块的变量
     static int rect;
+    static Color color;
+    static Color[] allColor;
     //线程的休眠时间
     static int time=1000;
     //表示方块坐标
@@ -48,11 +53,13 @@ public class Tertris extends JFrame implements KeyListener{
         //设置窗口居中
         this.setLocationRelativeTo(null);
         //设置释放窗体
-        //this.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //设置窗口大小不可变
         this.setResizable(false);
         //设置标题
         this.setTitle("我的俄罗斯方块游戏");
+
+        this.setIconImage(new ImageIcon(file1.getAbsolutePath()).getImage());
     }
 
     //初始化游戏界面
@@ -133,6 +140,9 @@ public class Tertris extends JFrame implements KeyListener{
         allRect = new int[]{
                 0x0c88,0x008e,0x044c,0x00e2,0x04c8,0x00c6,0x0c44,0x00e8,0x088c,0x002e,0x08c4,0x006c,0x000f,0x8888,0x00cc,0x004e,0x04c4,0x00e4,0x08c8
         };
+        allColor = new Color[]{
+                Color.yellow,Color.red,Color.BLUE
+        };
     }
 
     //下面的是原来单独游戏程序运行用的main函数（因为这一部分是另一个人写的，我写的前面的面板）
@@ -152,7 +162,7 @@ public class Tertris extends JFrame implements KeyListener{
         for(int i=0;i <= 24;i++){
             for (int j=1;j <= 10;j++){
                 if(data[i][j] == 1)
-                    text[i][j].setBackground(Color.BLUE);
+                    text[i][j].setBackground(Color.BLACK);
             }
         }
         while (isrunning) {
@@ -167,9 +177,11 @@ public class Tertris extends JFrame implements KeyListener{
 
     //随机生成下落方块形状的方法
     public void ranRect() {
-        Random random = new Random();
+        Random random1 = new Random();
+        Random random2 = new Random();
 
-        rect = allRect[random.nextInt(19)];
+        rect = allRect[random1.nextInt(19)];
+        color = allColor[random2.nextInt(3)];
     }
 
     //游戏运行的方法
@@ -260,6 +272,7 @@ public class Tertris extends JFrame implements KeyListener{
             for (int j = 0;j < 4;j++) {
                 if ((temp & rect) != 0) {
                     data[m][n] = 1;
+                    text[m][n].setBackground(Color.BLACK);
                 }
                 n++;
                 temp >>= 1;
@@ -297,7 +310,7 @@ public class Tertris extends JFrame implements KeyListener{
         for (int i = row;i >= 1;i--) {
             for (int j = 1;j <= game_y-2;j++) {
                 if (data[i][j] == 1) {
-                    text[i][j].setBackground(Color.BLUE);
+                    text[i][j].setBackground(Color.BLACK);
                 }else {
                     text[i][j].setBackground(Color.WHITE);
                 }
@@ -339,7 +352,7 @@ public class Tertris extends JFrame implements KeyListener{
         for (int i = 0;i < 4;i++) {
             for (int j = 0;j < 4;j++) {
                 if ((temp & rect) != 0) {
-                    text[m][n].setBackground(Color.BLUE);
+                    text[m][n].setBackground(color);
                 }
                 n++;
                 temp >>= 1;

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.sxt.Main
+Class-Path: libs/jlayer-1.0.1.jar
+

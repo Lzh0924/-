@@ -4,40 +4,49 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 
 public class Login extends JFrame implements ActionListener{
+    File file1 = new File("图标.jpg");
+    File file2 = new File("背景.jpg");
     public Login() {
-        this.setResizable(false);
-        this.setTitle("Login Interface");
-        this.setBounds(200, 100, 400, 650);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setIconImage(new ImageIcon("D:\\JAVA project\\FinalProject（俄罗斯方块）\\样品\\Tertris（仅游戏）\\src\\图标.jpg").getImage());
+        this.setResizable(false);//不可改变大小
+        this.setTitle(" 俄 罗 斯 方 块 ");//标题
+        this.setBounds(200, 100, 400, 650);//窗口大小
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//关闭程序
+        this.setIconImage(new ImageIcon(file1.getAbsolutePath()).getImage());//窗口小图标
         this.setLayout(null);
 
+        //设置按钮格式
         JButton button = new JButton("开 始 游 戏");
-        button.setFont(new Font("华文彩云",Font.BOLD,20));
+        button.setContentAreaFilled(false);//设置按钮透明
+        button.setBorder(null);//取消边框
+        button.setFont(new Font("幼圆",Font.BOLD,20));//设置字体、大小、加粗
+        button.setForeground(Color.GRAY);
         Color color = new Color(236, 241, 242);
-        button.setBackground(color);
-        button.setBounds(200, 280, 150, 50);
+        button.setBounds(240, 260, 140, 40);
         this.add(button);
 
         JButton button1 = new JButton("继 续 游 戏");
-        button1.setFont(new Font("华文彩云",Font.BOLD,20));
-        Color color1 = new Color(236, 241, 242);
-        button1.setBackground(color1);
-        button1.setBounds(200, 380, 150, 50);
+        button1.setContentAreaFilled(false);//设置按钮透明
+        button1.setBorder(null);//取消边框
+        button1.setFont(new Font("幼圆",Font.BOLD,20));
+        button1.setForeground(Color.GRAY);
+        button1.setBounds(240, 300, 140, 40);
         this.add(button1);
 
-
-        ImageIcon background = new ImageIcon("D:\\JAVA project\\FinalProject（俄罗斯方块）\\样品\\Tertris（仅游戏）\\src\\背景.jpg");
+        //设置背景
+        ImageIcon background = new ImageIcon(file2.getAbsolutePath());
         JLabel Bg = new JLabel(background);
         Bg.setBounds(0, 0, 400, 600);
         this.add(Bg);
 
         this.setVisible(true);
+
+        new rePlay();
 
         button.addActionListener(this);
         button1.addActionListener(this);
