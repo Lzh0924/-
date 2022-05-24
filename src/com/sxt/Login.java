@@ -4,15 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 
 
 public class Login extends JFrame implements ActionListener{
     File file1 = new File("图标.jpg");
     File file2 = new File("背景.jpg");
-    public Login() {
+    int num = 0;
+    public Login() throws IOException{
         this.setResizable(false);//不可改变大小
         this.setTitle(" 俄 罗 斯 方 块 ");//标题
         this.setBounds(200, 100, 400, 650);//窗口大小
@@ -50,6 +50,11 @@ public class Login extends JFrame implements ActionListener{
 
         button.addActionListener(this);
         button1.addActionListener(this);
+
+        BufferedReader reader;
+        reader = new BufferedReader(new FileReader("save.txt"));
+        if (reader.readLine() != null)
+            num++;
     }
 
     /*public void  run(){
@@ -65,9 +70,7 @@ public class Login extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         bt1 = e.getActionCommand();
 
-        Thread t1 = new Thread(this::run1);
-        t1.start();
-        this.setVisible(false);
+        new Thread(this::run1).start();
         //new Thread(this).start();
 
 
@@ -100,11 +103,13 @@ public class Login extends JFrame implements ActionListener{
     public void run1() {
         if(Objects.equals(bt1, "开 始 游 戏")){
             Difficulty difficulty = new Difficulty();
+            this.setVisible(false);
         }
-        else if(Objects.equals(bt1, "继 续 游 戏")){
+        else if(Objects.equals(bt1, "继 续 游 戏") && num == 1){
             try {
                 Tertris tertris = new Tertris();
                 Arr.load1();
+                this.setVisible(false);
                 tertris.game_begin();
             } catch (IOException ex) {
                  ex.printStackTrace();
